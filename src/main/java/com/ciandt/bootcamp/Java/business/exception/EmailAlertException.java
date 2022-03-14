@@ -7,7 +7,7 @@ import org.zalando.problem.StatusType;
 
 public class EmailAlertException extends AlertException {
 
-    private static final StatusType statusType = Status.PRECONDITION_FAILED;
+    private static final StatusType statusType = Status.BAD_REQUEST;
 
     public EmailAlertException(ProblemKey problemKey) {
         super(statusType, problemKey);

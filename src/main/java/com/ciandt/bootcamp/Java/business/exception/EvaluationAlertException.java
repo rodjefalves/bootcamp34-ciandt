@@ -7,7 +7,7 @@ import org.zalando.problem.StatusType;
 
 public class EvaluationAlertException extends AlertException {
 
-    private static final StatusType statusType = Status.PRECONDITION_FAILED;
+    private static final StatusType statusType = Status.BAD_REQUEST;
 
     public EvaluationAlertException(ProblemKey problemKey) {
         super(statusType, problemKey);

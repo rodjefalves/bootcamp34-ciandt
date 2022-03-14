@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.Date;
+import java.util.Locale;
 
 @ControllerAdvice
 public class ExceptionHandling {
@@ -27,7 +28,10 @@ public class ExceptionHandling {
                 .timestamp(new Date().getTime())
                 .status(alertException.getStatus().getStatusCode())
                 .title(alertException.getStatus().getReasonPhrase())
-                .message(messageSource.getMessage(alertException.getProblemKey().name(), alertException.getMessageArgs(),null))
+                .message(messageSource.getMessage(alertException
+                        .getProblemKey()
+                        .name(), alertException
+                        .getMessageArgs(), Locale.getDefault()))
                 .build();
         return new ResponseEntity<>(exceptionDetails, HttpStatus
                 .valueOf(alertException
