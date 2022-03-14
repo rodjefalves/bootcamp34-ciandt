@@ -40,7 +40,7 @@ public class BreweryController {
 
     @PostMapping("/cidade/{email}")
     @ApiOperation("Avalia a cervejaria")
-    public String validarEmail(@PathParam("email") String email){
+    public String validarEmail(@PathParam("email") String email, @RequestBody int star){
         return breweryBusiness.findEmail(email);
     }
 }
