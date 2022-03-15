@@ -6,34 +6,36 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/Brewery")
-@Api(value="API Brewery")
+@RequestMapping("/breweries")
+@Api(value = "API Brewery")
 public class BreweryController {
 
     @Autowired
     private BreweryBusiness breweryBusiness;
-    
-    @GetMapping("/cidades")
+
+    @GetMapping
     @ApiOperation("Retorna a busca por cidades")
-    public  List<BrewerieWrapper> buscaCidades(@RequestParam Optional<String> cidade) {
+    public List<BrewerieWrapper> buscaBrewery(@RequestParam Optional<String> cidade) {
         return breweryBusiness.findCities(cidade);
     }
 
-    @GetMapping("/cidade/{id}")
+    @GetMapping("/{id}")
     @ApiOperation("Faz pesquisa por cervejaria por Id")
     public BrewerieWrapper buscaPorId(@RequestParam("id") String id){
         return breweryBusiness.findId(id);
     }
 
-    @PostMapping("/cidade/{email}")
+    @PostMapping("/{rating}")
     @ApiOperation("Avalia a cervejaria")
-    public String validarEmail(@RequestParam("email") String email, @RequestBody Double stars){
-        return breweryBusiness.addRating(email, stars);
+    public ResponseEntity<String> adicionaValidarEmail(@RequestParam("email") String email, @RequestBody Double star) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(breweryBusiness.addRating(email, star));
     }
 }
