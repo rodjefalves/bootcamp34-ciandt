@@ -1,6 +1,7 @@
 package com.ciandt.bootcamp.Java.application;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.websocket.server.PathParam;
 
@@ -28,19 +29,19 @@ public class BreweryController {
     
     @GetMapping("/cidades")
     @ApiOperation("Retorna a busca por cidades")
-    public  List<Cervejaria> buscaCidades(@RequestParam String cidade){
+    public  List<Cervejaria> buscaCidades(@RequestParam Optional<String> cidade){
         return breweryBusiness.findCities(cidade);
     }
 
     @GetMapping("/cidade/{id}")
     @ApiOperation("Faz pesquisa por cervejaria por Id")
-    public Cervejaria buscaPorId(@PathVariable("id") int id){
+    public Cervejaria buscaPorId(@RequestParam("id") int id){
         return breweryBusiness.findId(id);
     }
 
     @PostMapping("/cidade/{email}")
     @ApiOperation("Avalia a cervejaria")
-    public String validarEmail(@PathParam("email") String email, @RequestBody int star){
+    public String validarEmail(@RequestParam("email") String email, @RequestBody int star){
         return breweryBusiness.findEmail(email);
     }
 }
