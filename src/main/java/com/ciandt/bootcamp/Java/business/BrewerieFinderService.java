@@ -51,4 +51,11 @@ public class BrewerieFinderService {
         final ResponseEntity<Brewerie> response = restTemplate.getForEntity(uri.toUri(), Brewerie.class);
         return response.getBody();
     }
+
+    public List<Brewerie> findAll() {
+        final UriComponents uri = UriComponentsBuilder.newInstance().scheme("https").host(openBrewerieBaseUrl).build();
+        final ResponseEntity<Brewerie[]> response = restTemplate.getForEntity(uri.toUri(), Brewerie[].class);
+        final Brewerie[] responseBody = response.getBody();
+        return ObjectUtils.isEmpty(responseBody) ? Collections.emptyList() : Arrays.asList(responseBody);
+    }
 }
