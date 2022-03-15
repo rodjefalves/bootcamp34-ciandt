@@ -11,7 +11,7 @@ public class BrewerieWrapper {
 
     private final Brewerie brewerie;
     private final List<Rating> ratings;
-    private Integer points;
+    private Double points;
 
     public BrewerieWrapper(Brewerie brewerie,
                            List<Rating> ratings) {
@@ -28,9 +28,9 @@ public class BrewerieWrapper {
         return ratings;
     }
 
-    public Integer getPoints() {
+    public Double getPoints() {
 
-        Integer sumPoints = 0;
+        Double sumPoints = 0.0d;
 
         for (Rating rating : ratings) {
 
