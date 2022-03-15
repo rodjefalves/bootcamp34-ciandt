@@ -1,7 +1,7 @@
 package com.ciandt.bootcamp.Java.domain.wrapper;
 
-import com.ciandt.bootcamp.Java.domain.entity.Brewerie;
-import com.ciandt.bootcamp.Java.domain.entity.Rating;
+import com.ciandt.bootcamp.Java.domain.Brewerie;
+import com.ciandt.bootcamp.Java.domain.Rating;
 import lombok.ToString;
 
 import java.util.List;
