@@ -35,8 +35,7 @@ public class BreweryBusiness {
         return null;
     }
 
-    public String addRating(String email, Double stars) {
+    public void addRating(String email, Double stars) {
         //Validar email durante a adição
-        return null;
     }
 }

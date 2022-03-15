@@ -7,7 +7,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,7 +34,8 @@ public class BreweryController {
 
     @PostMapping("/{rating}")
     @ApiOperation("Avalia a cervejaria")
-    public ResponseEntity<String> adicionaValidarEmail(@RequestParam("email") String email, @RequestBody Double star) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(breweryBusiness.addRating(email, star));
+    @ResponseStatus(HttpStatus.CREATED)
+    public void adicionaValidarEmail(@RequestParam("email") String email, @RequestBody Double star) {
+        breweryBusiness.addRating(email, star);
     }
 }
