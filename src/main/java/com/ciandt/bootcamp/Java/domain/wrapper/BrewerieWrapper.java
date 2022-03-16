@@ -1,5 +1,7 @@
 package com.ciandt.bootcamp.Java.domain.wrapper;
 
+import com.ciandt.bootcamp.Java.business.exception.NotFoundAlertException;
+import com.ciandt.bootcamp.Java.business.exception.base.ProblemKey;
 import com.ciandt.bootcamp.Java.domain.Brewerie;
 import com.ciandt.bootcamp.Java.domain.Rating;
 import lombok.ToString;
@@ -38,7 +40,12 @@ public class BrewerieWrapper {
 
         }
 
-        return sumPoints/ratings.size();
+        points = sumPoints/ratings.size();
+
+        if (points.isNaN())
+            points = Double.valueOf("0");
+
+        return points;
 
     }
 

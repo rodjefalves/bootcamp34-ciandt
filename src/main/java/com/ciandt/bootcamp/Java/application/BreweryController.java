@@ -1,10 +1,10 @@
 package com.ciandt.bootcamp.Java.application;
 
 import com.ciandt.bootcamp.Java.business.BreweryBusiness;
+import com.ciandt.bootcamp.Java.domain.EmailValidationDTO;
 import com.ciandt.bootcamp.Java.domain.wrapper.BrewerieWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -28,14 +28,16 @@ public class BreweryController {
 
     @GetMapping("/{id}")
     @ApiOperation("Faz pesquisa por cervejaria por Id")
-    public BrewerieWrapper buscaPorId(@RequestParam("id") String id){
+    public BrewerieWrapper buscaPorId(@PathVariable String id){
         return breweryBusiness.findId(id);
     }
 
     @PostMapping("/{rating}")
     @ApiOperation("Avalia a cervejaria")
     @ResponseStatus(HttpStatus.CREATED)
-    public void adicionaValidarEmail(@RequestParam("email") String email, @RequestBody Double star) {
-        breweryBusiness.addRating(email, star);
+    public void adicionaValidarEmail(@RequestBody EmailValidationDTO emailValidationDTO) {
+        breweryBusiness.addRating(emailValidationDTO.getEmail(),
+                emailValidationDTO.getStars(),
+                emailValidationDTO.getBrewerieId());
     }
 }
