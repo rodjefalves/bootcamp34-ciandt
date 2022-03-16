@@ -1,5 +1,6 @@
 package com.ciandt.bootcamp.Java.business;
 
+import com.ciandt.bootcamp.Java.business.exception.NotFoundAlertException;
 import com.ciandt.bootcamp.Java.business.util.OrderBreweries;
 import com.ciandt.bootcamp.Java.business.exception.EmailAlertException;
 import com.ciandt.bootcamp.Java.business.exception.base.ProblemKey;
@@ -9,7 +10,10 @@ import com.ciandt.bootcamp.Java.domain.RatingRepository;
 import com.ciandt.bootcamp.Java.domain.wrapper.BrewerieWrapper;
 import lombok.AllArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +35,7 @@ public class BreweryBusiness {
 
     public List<BrewerieWrapper> findCities(Optional<String> cidade) {
         final List<Brewerie> breweries = cidade.isEmpty() ? finderService.findAll() : finderService.findByCity(cidade.get());
+        validateEmptyResult(breweries);
 
         List<BrewerieWrapper> brewerieWrapperList = new ArrayList<>();
 
@@ -53,14 +58,18 @@ public class BreweryBusiness {
     }
 
     public BrewerieWrapper findId(String id) {
-        final Brewerie brewerie = finderService.findById(id);
-        return new BrewerieWrapper(brewerie, ratingRepository.findByBrewerieId(id));
+        try {
+            final Brewerie brewerie = finderService.findById(id);
+            return new BrewerieWrapper(brewerie, ratingRepository.findByBrewerieId(id));
+        } catch (HttpClientErrorException exception) {
+            throw new NotFoundAlertException(ProblemKey.BREWERY_NOT_FOUND);
+        }
     }
 
 
     public void addRating(final String email, final Double stars, final String brewerieId) {
         validateEmailFormat(email);
-        validadeUniqueRating(email, brewerieId);
+        validateUniqueRating(email, brewerieId);
 
         final Rating rating = new Rating();
         rating.setEmail(email);
@@ -75,9 +84,16 @@ public class BreweryBusiness {
         }
     }
 
-    private void validadeUniqueRating(final String email, final String brewerieId) {
+    private void validateUniqueRating(final String email, final String brewerieId) {
         if (ratingRepository.existsByEmailAndBrewerieId(email, brewerieId)) {
             throw new EmailAlertException(ProblemKey.USED_EMAIL);
         }
     }
+
+    public void validateEmptyResult(final List<Brewerie> breweries) {
+        if (ObjectUtils.isEmpty(breweries)) {
+            throw new NotFoundAlertException(ProblemKey.BREWERY_NOT_FOUND);
+        }
+    }
+
 }
