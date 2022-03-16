@@ -32,7 +32,7 @@ public class BreweryController {
         return breweryBusiness.findId(id);
     }
 
-    @PostMapping("/{rating}")
+    @PostMapping("/rating")
     @Operation(summary = "Avalia a cervejaria")
     @ResponseStatus(HttpStatus.CREATED)
     public void adicionaValidarEmail(@RequestBody EmailValidationDTO emailValidationDTO) {
