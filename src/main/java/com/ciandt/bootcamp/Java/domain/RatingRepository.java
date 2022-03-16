@@ -9,4 +9,7 @@ import java.util.List;
 public interface RatingRepository extends MongoRepository<Rating, String> {
 
     List<Rating> findByBrewerieId(String id);
+    Rating findByEmailAndBrewerieId(String email,String brewerieId);
+    Boolean existsByEmailAndBrewerieId(String email,String brewerieId);
+    void deleteByEmailAndBrewerieId(String email,String brewerieId);
 }
