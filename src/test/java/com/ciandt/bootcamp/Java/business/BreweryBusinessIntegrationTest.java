@@ -1,6 +1,7 @@
 package com.ciandt.bootcamp.Java.business;
 
 import com.ciandt.bootcamp.Java.business.exception.EmailAlertException;
+import com.ciandt.bootcamp.Java.business.exception.NotFoundAlertException;
 import com.ciandt.bootcamp.Java.business.exception.base.ProblemKey;
 import com.ciandt.bootcamp.Java.domain.Rating;
 import com.ciandt.bootcamp.Java.domain.RatingRepository;
@@ -9,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
+
+import java.util.Optional;
 
 @SpringBootTest
 public class BreweryBusinessIntegrationTest {
@@ -66,5 +69,23 @@ public class BreweryBusinessIntegrationTest {
                 () -> breweryBusiness.addRating(invalidEmail, stars, brewerieId));
         Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), exception.getStatus().getStatusCode());
         Assertions.assertEquals(ProblemKey.INVALID_EMAIL, exception.getProblemKey());
+    }
+
+    @Test
+    public void findBreweriesByInvalidCity() {
+        final String INVALID_CITY = "AAA";
+        final NotFoundAlertException exception = Assertions.assertThrows(NotFoundAlertException.class,
+                () -> breweryBusiness.findCities(Optional.of(INVALID_CITY)));
+        Assertions.assertEquals(HttpStatus.NOT_FOUND.value(), exception.getStatus().getStatusCode());
+        Assertions.assertEquals(ProblemKey.BREWERY_NOT_FOUND, exception.getProblemKey());
+    }
+
+    @Test
+    public void findBreweriesByInvalidId() {
+        final String INVALID_ID = "-";
+        final NotFoundAlertException exception = Assertions.assertThrows(NotFoundAlertException.class,
+                () -> breweryBusiness.findId(INVALID_ID));
+        Assertions.assertEquals(HttpStatus.NOT_FOUND.value(), exception.getStatus().getStatusCode());
+        Assertions.assertEquals(ProblemKey.BREWERY_NOT_FOUND, exception.getProblemKey());
     }
 }
