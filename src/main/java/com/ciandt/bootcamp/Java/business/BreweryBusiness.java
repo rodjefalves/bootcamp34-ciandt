@@ -10,7 +10,6 @@ import com.ciandt.bootcamp.Java.domain.RatingRepository;
 import com.ciandt.bootcamp.Java.domain.wrapper.BrewerieWrapper;
 import lombok.AllArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.HttpClientErrorException;
@@ -34,7 +33,8 @@ public class BreweryBusiness {
     private final OrderBreweries orderBreweries;
 
     public List<BrewerieWrapper> findCities(Optional<String> cidade) {
-        final List<Brewerie> breweries = cidade.isEmpty() ? finderService.findAll() : finderService.findByCity(cidade.get());
+        final List<Brewerie> breweries = cidade.isEmpty() ? finderService.findAll()
+                : finderService.findByCity(cidade.get());
         validateEmptyResult(breweries);
 
         List<BrewerieWrapper> brewerieWrapperList = new ArrayList<>();
@@ -65,7 +65,6 @@ public class BreweryBusiness {
             throw new NotFoundAlertException(ProblemKey.BREWERY_NOT_FOUND);
         }
     }
-
 
     public void addRating(final String email, final Double stars, final String brewerieId) {
         validateEmailFormat(email);
