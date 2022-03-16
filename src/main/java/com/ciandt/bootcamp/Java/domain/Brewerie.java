@@ -20,13 +20,13 @@ public class Brewerie {
     private String address_3;
     private String city;
     private String state;
-    private String countyProvince;
-    private String postalCode;
+    private String county_province;
+    private String postal_code;
     private String country;
     private String longitude;
     private String latitude;
     private String phone;
-    private String websiteUrl;
-    private LocalDateTime updatedAt;
-    private LocalDateTime createdAt;
+    private String website_url;
+    private LocalDateTime updated_at;
+    private LocalDateTime created_at;
 }
