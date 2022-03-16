@@ -35,7 +35,7 @@ public class BreweryController {
     @PostMapping("/{rating}")
     @ApiOperation("Avalia a cervejaria")
     @ResponseStatus(HttpStatus.CREATED)
-    public void adicionaValidarEmail(@RequestParam("email") String email, @RequestBody Double star) {
-        breweryBusiness.addRating(email, star);
+    public void adicionaValidarEmail(@RequestParam("email") String email, @RequestBody Double star, @RequestBody String brewerieId) {
+        breweryBusiness.addRating(email, star, brewerieId);
     }
 }
