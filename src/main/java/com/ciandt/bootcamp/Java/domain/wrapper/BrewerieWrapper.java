@@ -1,7 +1,5 @@
 package com.ciandt.bootcamp.Java.domain.wrapper;
 
-import com.ciandt.bootcamp.Java.business.exception.NotFoundAlertException;
-import com.ciandt.bootcamp.Java.business.exception.base.ProblemKey;
 import com.ciandt.bootcamp.Java.domain.Brewerie;
 import com.ciandt.bootcamp.Java.domain.Rating;
 import lombok.ToString;
@@ -16,7 +14,7 @@ public class BrewerieWrapper {
     private Double points;
 
     public BrewerieWrapper(Brewerie brewerie,
-                           List<Rating> ratings) {
+            List<Rating> ratings) {
         this.brewerie = brewerie;
         this.ratings = ratings;
         this.points = getPoints();
@@ -40,7 +38,7 @@ public class BrewerieWrapper {
 
         }
 
-        points = sumPoints/ratings.size();
+        points = sumPoints / ratings.size();
 
         if (points.isNaN())
             points = Double.valueOf("0");
