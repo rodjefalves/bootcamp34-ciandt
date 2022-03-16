@@ -10,7 +10,7 @@ import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DataMongoTest
 @ExtendWith(SpringExtension.class)
@@ -20,7 +20,6 @@ public class MongoDbSpringIntegrationTest {
             + " then object is saved")
     @Test
     public void test(@Autowired MongoTemplate mongoTemplate) {
-        // given
         DBObject objectToSave = BasicDBObjectBuilder.start()
                 .add("key", "value")
                 .get();
@@ -28,5 +27,8 @@ public class MongoDbSpringIntegrationTest {
         mongoTemplate.save(objectToSave, "collection");
         assertThat(mongoTemplate.findAll(DBObject.class, "collection")).extracting("key")
                 .containsOnly("value");
+
+        mongoTemplate.remove(objectToSave, "collection");
+        assertThat(mongoTemplate.findAll(DBObject.class, "collection")).isEmpty();
     }
 }
