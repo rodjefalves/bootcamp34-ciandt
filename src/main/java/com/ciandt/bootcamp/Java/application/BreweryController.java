@@ -22,8 +22,8 @@ public class BreweryController {
 
     @GetMapping
     @ApiOperation("Retorna a busca por cidades")
-    public List<BrewerieWrapper> buscaBrewery(@RequestParam Optional<String> cidade) {
-        return breweryBusiness.findCities(cidade);
+    public List<BrewerieWrapper> buscaBrewery(@RequestParam("city") Optional<String> city) {
+        return breweryBusiness.findCities(city);
     }
 
     @GetMapping("/{id}")
